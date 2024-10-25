@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96075419342",
+    "project_id": "qr-code-2ce7e",
+    "storage_bucket": "qr-code-2ce7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96075419342:android:04ee4bc0fd1e3115f0ca9f",
+        "android_client_info": {
+          "package_name": "com.theholylabs.qrcode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKfHTh0IVCXsDInYeNQAl7Tc-R7Ppw57w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
