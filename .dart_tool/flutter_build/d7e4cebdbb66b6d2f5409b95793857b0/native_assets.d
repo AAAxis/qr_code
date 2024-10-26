@@ -1,0 +1,1 @@
+ /Users/admin/Documents/GitHub/qr_code/.dart_tool/flutter_build/d7e4cebdbb66b6d2f5409b95793857b0/native_assets.yaml: 

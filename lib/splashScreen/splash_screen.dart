@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:driver_app/authentication/email_login.dart';
 import 'package:driver_app/mainScreens/navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../global/global.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({Key? key}) : super(key: key);
@@ -14,13 +14,10 @@ class MySplashScreen extends StatefulWidget {
 }
 
 class _MySplashScreenState extends State<MySplashScreen> {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // Initialize Firebase Auth
 
-  void _navigateToHomeScreen() {
-    Navigator.push(context, MaterialPageRoute(builder: (c) => NavigationScreen()));
-  }
 
-  void _requestPermissionManually() async {
+
+  Future<void> _requestPermissionManually() async {
     final trackingStatus = await AppTrackingTransparency.requestTrackingAuthorization();
     print('Manual tracking permission request status: $trackingStatus');
 
@@ -33,23 +30,36 @@ class _MySplashScreenState extends State<MySplashScreen> {
       // User denied permission or not determined, store it as false
       await prefs.setBool('trackingPermissionStatus', false);
     }
-
-    // Continue with your application flow after checking tracking permission
-    _navigateToHomeScreen();
   }
 
   @override
   void initState() {
     super.initState();
+    _checkCurrentUser();
+  }
 
+  void _checkCurrentUser() {
     Timer(Duration(seconds: 3), () async {
-      if (firebaseAuth.currentUser != null) {
-        _navigateToHomeScreen();
+      // Check if the user is authenticated
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // User is authenticated, navigate to the main screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => NavigationScreen()),
+        );
       } else {
-        print('Waiting for response');
+        _requestPermissionManually();
+        // User is not authenticated, navigate to the login screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => EmailLoginScreen()),
+        );
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

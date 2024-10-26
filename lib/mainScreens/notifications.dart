@@ -12,7 +12,6 @@ class NotificationsScreen extends StatelessWidget {
         title: Text("Notifications"),
         backgroundColor: Colors.blue,
       ),
-      drawer: CustomDrawer(),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('notifications') // Replace with your notifications collection// Ensure notifications are ordered by time

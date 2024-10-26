@@ -132,7 +132,7 @@ class _ClockInOutPageState extends State<ClockInOutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shifts'),
+        title: Text('My Shifts'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

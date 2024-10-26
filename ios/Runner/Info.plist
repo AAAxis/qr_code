@@ -7,15 +7,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Appoint Master</string>
+	<string>Supply Syns</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.theholylabs.appointme</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>appointia</string>
+	<string>qrcode</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,6 +26,10 @@
 	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires location access to provide location-based services to users.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera access to allow users to upload photos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We require your location to provide accurate delivery estimates based on your current location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -1,5 +1,6 @@
 
 import 'package:driver_app/authentication/email_login.dart';
+import 'package:driver_app/mainScreens/maps.dart';
 import 'package:driver_app/mainScreens/notifications.dart';
 import 'package:driver_app/mainScreens/qrcode.dart';
 import 'package:driver_app/mainScreens/storage.dart';
@@ -37,9 +38,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
+          MapView(),
           TaskDisplayPage(),
           StorageBrokenItemsScreen(),
-          NotificationsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -50,6 +51,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
           });
         },
         items: [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Map',
+          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.task_alt),
             label: 'Tasks',
@@ -64,10 +71,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
 
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_none_rounded),
-            label: 'Notifications',
-          ),
         ],
       ),
     );

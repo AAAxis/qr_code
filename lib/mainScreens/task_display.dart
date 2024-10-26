@@ -50,17 +50,7 @@ class _TaskDisplayPageState extends State<TaskDisplayPage>
           TaskListView(status: 'Completed'),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CreateTaskPage()),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        tooltip: 'Add Task',
-      ),
+
     );
   }
 }

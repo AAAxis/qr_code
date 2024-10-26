@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driver_app/mainScreens/drawer.dart';
-import 'package:driver_app/mainScreens/maps.dart';
+import 'package:driver_app/mainScreens/qrcode.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,24 +31,24 @@ class StorageBrokenItemsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Inventory Management'),
           bottom: TabBar(
             tabs: [
-              Tab(text: 'Map'),
-              Tab(text: 'Tecnicians'),
               Tab(text: 'Storage'),
+              Tab(text: 'Tecnicians'),
+
             ],
           ),
         ),
         drawer: CustomDrawer(),
         body: TabBarView(
           children: [
-            Center(child: MapView()),// Placeholder for Map view
-            Center(child: AssignedItemsScreen()), // Placeholder for Assigned view
             _StorageTab(), // Storage tab with nested tabs
+            Center(child: AssignedItemsScreen()), // Placeholder for Assigned view
+
           ],
         ),
       ),
@@ -189,7 +189,7 @@ class _AssignedItemsScreenState extends State<AssignedItemsScreen> {
                                             }
 
                                             return ListTile(
-                                              leading: Icon(Icons.label, size: 24),
+                                              leading: Icon(Icons.device_hub, size: 24),
                                               title: Text('ID: $itemName'),
                                               subtitle: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,8 +270,7 @@ class __StorageTabState extends State<_StorageTab> {
       ),
     );
   }
-
-  // Method to build the search field
+// Method to build the search field
   Widget _buildSearchField() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -280,6 +279,10 @@ class __StorageTabState extends State<_StorageTab> {
           hintText: 'Search by ID ...',
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.search),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.qr_code_scanner),
+            onPressed: _openScanner, // Call the method to scan QR code
+          ),
         ),
         onChanged: (value) {
           setState(() {
@@ -289,6 +292,31 @@ class __StorageTabState extends State<_StorageTab> {
       ),
     );
   }
+
+
+
+
+
+  void _openScanner() async {
+    String? scannedID = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => QRScannerScreen(
+          onScanned: (id) {
+            setState(() {
+              _searchQuery = id; // Use the scanned ID
+            });
+          },
+        ),
+      ),
+    );
+
+    if (scannedID != null) {
+      setState(() {
+        _searchQuery = scannedID; // Use the scanned ID
+      });
+    }
+  }
+
 
   // Method to build the item list for "Broken" and "Storage" statuses
   Widget _buildItemsList(BuildContext context) {
@@ -318,7 +346,7 @@ class __StorageTabState extends State<_StorageTab> {
             String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(item.purchaseDate));
 
             return ListTile(
-              leading: Icon(item.status == 'Broken' ? Icons.broken_image : Icons.label, size: 24), // Change icon based on status
+              leading: Icon(item.status == 'Broken' ? Icons.broken_image : Icons.device_hub, size: 24), // Change icon based on status
               title: Text('ID: ${item.itemId}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

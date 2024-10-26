@@ -1,3 +1,4 @@
+import 'package:driver_app/mainScreens/drawer.dart';
 import 'package:driver_app/mainScreens/edit_marks.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,7 +13,8 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   late GoogleMapController _controller;
-  Set<Marker> _markers = {};
+   Set<Marker> _markers = {};
+  final LatLng telAvivCoordinates = LatLng(32.0853, 34.7818); // Coordinates for Tel Aviv
   List<Map<String, String>> _itemList = [];
   List<Map<String, String>> _filteredItems = [];
   LatLng? _tappedPoint;
@@ -30,11 +32,25 @@ class _MapViewState extends State<MapView> {
     super.initState();
     _fetchMarkers();
     _fetchAllTechnicians();
+   // Center map on user on load
     _fetchItems(); // Fetch items from Firestore
-    _dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now()); // Set current date
+    _dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
   }
 
+  void _centerOnDefaultLocation() {
+    // Coordinates for Israel
+    _controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: telAvivCoordinates, // Centering on Tel Aviv
+          zoom: 10, // Adjust the zoom level as needed (lower values zoom out)
+        ),
+      ),
+    );
 
+
+  }
 
 // Add a variable to store the marker ID
   MarkerId? _currentMarkerId;
@@ -42,6 +58,10 @@ class _MapViewState extends State<MapView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Map Screen"),
+      ),
+      drawer: CustomDrawer(),
       body: Stack(
         children: [
           GoogleMap(
@@ -78,7 +98,7 @@ class _MapViewState extends State<MapView> {
             left: 0,
             right: 0,
             child: Text(
-              "Tap anywhere to add a Mark",
+              "Tap to place a Mark",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18, // Adjust font size as needed
@@ -93,6 +113,7 @@ class _MapViewState extends State<MapView> {
               padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 onPressed: () {
+
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => EditMarksScreen()),
                   );
@@ -136,8 +157,10 @@ class _MapViewState extends State<MapView> {
   void _fetchItems() async {
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items')
-        .where('status', isNotEqualTo: 'Client') // Exclude items with status 'Assigned'
+        .where('status', whereIn: ['Storage', 'Assigned'])
         .get();
+
+
 
     setState(() {
       _itemList = querySnapshot.docs.map((doc) {
@@ -210,7 +233,7 @@ class _MapViewState extends State<MapView> {
       },
     ).whenComplete(() {
       _isBottomSheetOpen = false; // Reset the flag when the bottom sheet is closed
-
+      _fetchItems(); // Fetch items from Firestore
       // Remove the marker if the bottom sheet is dismissed
       if (_currentMarkerId != null) {
         _markers.removeWhere((marker) => marker.markerId == _currentMarkerId);
@@ -239,6 +262,7 @@ class _MapViewState extends State<MapView> {
   }
 
   void _fetchMarkers() async {
+
     final querySnapshot = await FirebaseFirestore.instance.collection('markers').get();
 
     Set<Marker> markers = {}; // Create a new set of markers
@@ -258,6 +282,7 @@ class _MapViewState extends State<MapView> {
     setState(() {
       _markers = markers; // Update the state with the fetched markers
     });
+    _centerOnDefaultLocation();// Set current date
   }
 
 
@@ -371,7 +396,7 @@ class _MapViewState extends State<MapView> {
                   });
                 },
                 decoration: InputDecoration(
-                  hintText: 'Select Technician',
+                  hintText: 'Technician',
                   prefixIcon: Icon(Icons.person, color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),

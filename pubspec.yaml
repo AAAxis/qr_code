@@ -43,6 +43,7 @@ dependencies:
   file_picker: ^5.0.0
   app_tracking_transparency: ^2.0.0
   url_launcher: ^6.1.14
+  location: ^4.4.0
   google_maps_flutter: ^2.5.0
   permission_handler: ^11.0.0
   geocoding: ^2.1.0

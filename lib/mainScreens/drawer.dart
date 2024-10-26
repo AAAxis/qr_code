@@ -1,6 +1,7 @@
 import 'package:driver_app/authentication/email_login.dart';
 import 'package:driver_app/mainScreens/add_item.dart';
 import 'package:driver_app/mainScreens/create_task.dart';
+import 'package:driver_app/mainScreens/notifications.dart';
 import 'package:driver_app/mainScreens/profile.dart';
 import 'package:driver_app/mainScreens/qrcode.dart';
 import 'package:driver_app/mainScreens/repair.dart';
@@ -52,7 +53,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.person, color: Colors.black),
+            leading: const Icon(Icons.person_outline_outlined, color: Colors.black),
             title: const Text(
               "Profile",
               style: TextStyle(color: Colors.black),
@@ -78,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.timelapse, color: Colors.black),
+            leading: const Icon(Icons.access_time_rounded, color: Colors.black),
             title: const Text(
               "My Shifts",
               style: TextStyle(color: Colors.black),
@@ -92,7 +93,7 @@ class CustomDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.devices_outlined, color: Colors.black),
+            leading: const Icon(Icons.device_hub, color: Colors.black),
             title: const Text(
               "Add Device",
               style: TextStyle(color: Colors.black),
@@ -105,20 +106,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings, color: Colors.black),
-            title: const Text(
-              "Under Repair",
-              style: TextStyle(color: Colors.black),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ItemsUnderRepairScreen()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.new_label, color: Colors.black),
+            leading: const Icon(Icons.task_alt_outlined, color: Colors.black),
             title: const Text(
               "Add Task",
               style: TextStyle(color: Colors.black),
@@ -131,6 +119,33 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
 
+
+          ListTile(
+            leading: const Icon(Icons.settings_outlined, color: Colors.black),
+            title: const Text(
+              "Under Repair",
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ItemsUnderRepairScreen()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.notifications_none_rounded, color: Colors.black),
+            title: const Text(
+              "Notifications",
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsScreen()),
+              );
+            },
+          ),
           const Divider(
             height: 10,
             color: Colors.grey,
